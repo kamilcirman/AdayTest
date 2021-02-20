@@ -1,0 +1,152 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "SıgnUp";
+}
+
+<div align="center">
+    <form class="col-md-3">
+        <div class="p-1 mb-2 bg-light text-dark">
+            <button type="submit" class="btn button" asp-page="/Index">Giriş<i class="ti-arrow-right"></i></button>
+            <button type="submit" class="btn button" asp-page="/SıgnUp">Üye Ol<i class="ti-arrow-right"></i></button>
+        </div>
+        <table>
+            <tr>
+                <td>
+                    <input type="text" class="form-control p-1 mb-2 bg-light text-dark" name="Name" placeholder="Ad">
+                </td>
+                <td>
+                    <input type="text" class="form-control p-1 mb-2 bg-light text-dark" name="SurName" placeholder="Soyad">
+                </td>
+            </tr>
+        </table>
+        <div class="form-group email">
+            <input type="text" class="form-control p-3 mb-2 bg-light text-dark" name="Eposta" placeholder="Email adresiniz">
+        </div>
+        <div class="form-group">
+            <div class="form-group password">
+                <input type="password" class="form-control p-3 mb-2 bg-light text-dark" name="password" id="password" placeholder="Şifreniz">
+                <div style="margin-top:-38px; margin-left:200px;">
+                    <i class="far fa-eye" id="togglePassword"></i>
+                </div>
+                <span id="newPasswordControllValidation" class="text-danger"></span>
+            </div>
+            <div class="form-group password">
+                <input type="password" class="form-control p-3 mb-2 bg-light text-dark" name="password1" id="password1" placeholder="Şİfre Onayı" onmouseout="newPassword()" >
+                <div style="margin-top:-38px; margin-left:200px;">
+                    <i class="far fa-eye" id="togglePassword1"></i>
+                </div>
+                <span id="newPasswordIdValidation" class="text-danger"></span>
+            </div>
+        </div>
+        <table>
+            <tr>
+                <td>
+                    <div style="margin-top:-55px;">
+                        <input type="checkbox" name="check" id ="check" value = "1" onclick="checkBoxControl()">
+                    </div>
+                </td>
+                <td>
+                    <p>Önemli kampanyalardan haberdar olmak için <b>Rıza Metni</b> kapsamında elektronik ileti almak istiyorum.</p>
+                </td>
+            </tr>
+        </table>
+        <div>
+            <div class="p-1 mb-2 bg-warning text-dark">
+                <button type="button" id="signUp" class="btn button">Üye Ol<i class="ti-arrow-right"></i></button>
+            </div>
+        </div>
+    </form>
+</div>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+<link rel="stylesheet" href="css/style.css">
+<script>
+    const togglePassword = document.querySelector('#togglePassword');
+    const password = document.querySelector('#password');
+    togglePassword.addEventListener('click', function (e) {
+        // toggle the type attribute
+        const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+        password.setAttribute('type', type);
+        // toggle the eye slash icon
+        this.classList.toggle('fa-eye-slash');
+    });
+    $(document).ready(function () {
+        $("#show_hide_password a").on('click', function (event) {
+            event.preventDefault();
+            if ($('#show_hide_password input').attr("type") == "text") {
+                $('#show_hide_password input').attr('type', 'password');
+                $('#show_hide_password i').addClass("fa-eye-slash");
+                $('#show_hide_password i').removeClass("fa-eye");
+            } else if ($('#show_hide_password input').attr("type") == "password") {
+                $('#show_hide_password input').attr('type', 'text');
+                $('#show_hide_password i').removeClass("fa-eye-slash");
+                $('#show_hide_password i').addClass("fa-eye");
+            }
+        });
+    });
+    ////İkinci Parola gizleme
+    const togglePassword1 = document.querySelector('#togglePassword1');
+    const password1 = document.querySelector('#password1');
+    togglePassword1.addEventListener('click', function (e) {
+        // toggle the type attribute
+        const type1 = password1.getAttribute('type') === 'password1' ? 'text' : 'password';
+        password1.setAttribute('type', type1);
+        // toggle the eye slash icon
+        this.classList.toggle('fa-eye-slash');
+    });
+    $(document).ready(function () {
+        $("#show_hide_password1 a").on('click', function (event) {
+            event.preventDefault();
+            if ($('#show_hide_password1 input').attr("type1") == "text") {
+                $('#show_hide_password1 input').attr('type1', 'password1');
+                $('#show_hide_password1 i').addClass("fa-eye-slash");
+                $('#show_hide_password1 i').removeClass("fa-eye");
+            } else if ($('#show_hide_password1 input').attr("type1") == "password1") {
+                $('#show_hide_password1 input').attr('type1', 'text');
+                $('#show_hide_password1 i').removeClass("fa-eye-slash");
+                $('#show_hide_password1 i').addClass("fa-eye");
+            }
+        });
+    });
+
+    ////// aktif Pasif
+    function checkBoxControl() {
+        var state = 1;
+        console.log("deadasdadad");
+        SetStateSubmitButton(state);
+        var newcheck = document.getElementById("check").value;
+        if (newcheck == "1") {
+            SetStateSubmitButton("1");
+        } else {
+            SetStateSubmitButton("0");
+        }
+        console.log("asdasdsadasd  ", newcheck);
+    }
+    function SetStateSubmitButton(state) {
+        if (state == "1") {
+            $("#signUp").attr("disabled", false)
+        }
+        else if (state == "0") {
+            $("#signUp").attr("disabled", true);
+        }
+    }
+    //Yüklendiğinde kaydet butonu pasif
+    SetStateSubmitButton("0");
+    //// Parola Kontrol
+    function newPassword() {
+        var newPasswordId = document.getElementById("password").value;
+        var newPasswordId2 = document.getElementById("password1").value;
+        if (newPasswordId.length < 8) {
+            $("#newPasswordControllValidation").text("Lütfen En Az 8 Karakterli Şifre Giriniz.");
+            SetStateSubmitButton("0");
+        }
+        else {
+            $("#newPasswordControllValidation").text("");
+        }
+        if (newPasswordId != newPasswordId2) {
+            $("#newPasswordIdValidation").text("Girmiş Olduğunuz Şifreler Eşleşmiyor Lütfen Tekrar Giriniz.");
+        } else {
+            $("#newPasswordIdValidation").text("");
+        }
+    }
+</script>

@@ -1,0 +1,60 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div align="center">
+    <form class="col-md-3">
+        <div class="p-1 mb-2 bg-light text-dark">
+            <button type="submit" class="btn button" asp-page="/Index">Giriş<i class="ti-arrow-right"></i></button>
+            <button type="submit" class="btn button" asp-page="/SıgnUp">Üye Ol<i class="ti-arrow-right"></i></button>
+        </div>
+        <div class="form-group email">
+            <input type="text" class="form-control p-3 mb-2 bg-light text-dark" name="Eposta" placeholder="Email adresiniz">
+        </div>
+        <div class="form-group">
+            <div class="form-group password">
+                <input type="password" class="form-control p-3 mb-2 bg-light text-dark" name="password" id="password" placeholder="Şifreniz">
+                <div style="margin-top:-38px; margin-left:200px;">
+                    <i class="far fa-eye" id="togglePassword"></i>
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class="p-1 mb-2 bg-warning text-dark">
+                <button type="submit" class="btn button">Giriş Yap<i class="ti-arrow-right"></i></button>
+            </div>
+            <div align="left">
+                <a class="text-warning" align="left" href="#">Şifremi Unuttum</a>
+            </div>
+        </div>
+    </form>
+</div>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+<link rel="stylesheet" href="css/style.css">
+<script>
+    const togglePassword = document.querySelector('#togglePassword');
+    const password = document.querySelector('#password');
+    togglePassword.addEventListener('click', function (e) {
+        // toggle the type attribute
+        const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+        password.setAttribute('type', type);
+        // toggle the eye slash icon
+        this.classList.toggle('fa-eye-slash');
+    });
+    $(document).ready(function () {
+        $("#show_hide_password a").on('click', function (event) {
+            event.preventDefault();
+            if ($('#show_hide_password input').attr("type") == "text") {
+                $('#show_hide_password input').attr('type', 'password');
+                $('#show_hide_password i').addClass("fa-eye-slash");
+                $('#show_hide_password i').removeClass("fa-eye");
+            } else if ($('#show_hide_password input').attr("type") == "password") {
+                $('#show_hide_password input').attr('type', 'text');
+                $('#show_hide_password i').removeClass("fa-eye-slash");
+                $('#show_hide_password i').addClass("fa-eye");
+            }
+        });
+    });
+</script>
